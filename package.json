@@ -1,0 +1,25 @@
+{
+  "name": "chat-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "history": "^4.7.2",
+    "inferno": "^3.10.1",
+    "inferno-component": "^3.10.1",
+    "inferno-mobx": "^3.10.1",
+    "inferno-router": "^3.10.1",
+    "inferno-scripts": "5.0.0",
+    "mobx": "^3.3.2",
+    "mobx-react-form": "^1.32.2",
+    "node-sass": "^4.7.2",
+    "validatorjs": "^3.13.5"
+  },
+  "scripts": {
+    "start": "inferno-scripts start",
+    "build": "inferno-scripts build",
+    "test": "inferno-scripts test --env=jsdom",
+    "eject": "inferno-scripts eject",
+    "build-css": "node-sass src/styles/base.scss src/styles/base.css",
+    "watch-css": "nodemon -e scss -x \"npm run build-css\""
+  }
+}
