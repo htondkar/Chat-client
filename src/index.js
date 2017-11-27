@@ -1,6 +1,7 @@
 import { render } from 'inferno'
 import App from './App'
 import LoginPage from './LoginPage'
+import SingUpPage from './SingUpPage'
 import { Router, Route, IndexRoute } from 'inferno-router'
 import { createBrowserHistory } from 'history'
 
@@ -12,6 +13,7 @@ const routes = (
   <Router history={browserHistory}>
     <Route component={App}>
       <IndexRoute component={LoginPage} />
+      <Route path='sign-up' component={SingUpPage} />
     </Route>
   </Router>
 )
