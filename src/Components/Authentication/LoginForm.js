@@ -16,7 +16,7 @@ const LoginForm = observer(
 
     render() {
       return (
-        <form onSubmit={form.onSubmit} class="login-form-fields-wrapper">
+        <form onSubmit={form.onSubmit} class="form-fields-wrapper">
           <InputField
             type="text"
             {...form.$('email').bind()}

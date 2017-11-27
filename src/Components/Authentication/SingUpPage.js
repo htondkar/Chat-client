@@ -1,11 +1,18 @@
-import Component from 'inferno-component'
+import SignUpForm from './SignUpForm'
+import { Link } from 'inferno-router'
+import Logo from '../common/Logo'
+import form from './signUpFormState'
 
-export default class SingUpPage extends Component {
-  render() {
-    return (
-      <div className="page center-content sign-up-page">
-        this is the signup page
-      </div>
-    )
-  }
-}
+const LoginPage = () => (
+  <div class="page center-content-vertical sign-up-page">
+    <div class="center-content-vertical sign-up-form">
+      <Logo />
+      <SignUpForm form={form} />
+      <Link to="/" class="link">
+        Login
+      </Link>
+    </div>
+  </div>
+)
+
+export default LoginPage

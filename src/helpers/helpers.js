@@ -6,6 +6,14 @@ export function appendToFormData(values) {
       formData.append(field, values[field])
     }
   }
-  
+
   return formData
+}
+
+export const runIfResIsOk = (onSuccess, onFail) => res => {
+  if (res.status < 400) {
+    onSuccess(res)
+  } else {
+    onFail(res)
+  }
 }

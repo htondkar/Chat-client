@@ -27,6 +27,10 @@ class API {
   authenticate = values => {
     return axios.post(endPoints.signIn, values, this.config())
   }
+
+  signUp = values => {
+    return axios.post(endPoints.signUp, values, this.config())
+  }
 }
 
 const api = new API()

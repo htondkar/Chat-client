@@ -1,7 +1,8 @@
 const baseURL = 'http://localhost:3333'
 
 const urls = {
-  signIn: 'sign-in'
+  signIn: 'sign-in',
+  signUp: 'sign-up'
 }
 
 const urlProxy = new Proxy(urls, {

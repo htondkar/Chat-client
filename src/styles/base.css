@@ -143,35 +143,15 @@ input {
   .login-page .login-form .logo {
     margin-bottom: 30px; }
 
-.login-page .login-form-fields-wrapper {
-  padding: 10px; }
-  .login-page .login-form-fields-wrapper > * {
-    margin: 5px 0; }
-  .login-page .login-form-fields-wrapper input {
-    height: 40px;
-    padding: 5px 10px;
-    border: 1px solid #d5d5d5;
-    background-color: transparent;
-    transition: all 0.4s linear;
-    width: 100%;
-    border-radius: 5px; }
-    .login-page .login-form-fields-wrapper input:focus {
-      background-color: white;
-      border-color: transparent; }
-  .login-page .login-form-fields-wrapper button[type='submit'] {
-    width: 100%;
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: all 0.4s linear;
-    background: linear-gradient(90deg, #24c6dc, #514a9d);
-    font-family: 'Varela Round';
-    color: white; }
-    .login-page .login-form-fields-wrapper button[type='submit']:hover {
-      background: linear-gradient(90deg, #139bad, #453d9c); }
-    .login-page .login-form-fields-wrapper button[type='submit']:active {
-      background: linear-gradient(90deg, #045661, #170c91); }
+.sign-up-page .sign-up-form {
+  width: 350px;
+  background-color: #e0e0e0;
+  border-radius: 10px;
+  box-shadow: -10px 10px 30px rgba(0, 0, 0, 0.35);
+  padding: 20px;
+  text-align: center; }
+  .sign-up-page .sign-up-form .logo {
+    margin-bottom: 30px; }
 
 .page {
   padding: 20px;
@@ -199,6 +179,36 @@ input {
   font-weight: bold;
   padding: 10px;
   color: #4776E6; }
+
+.form-fields-wrapper {
+  padding: 10px; }
+  .form-fields-wrapper > * {
+    margin: 5px 0; }
+  .form-fields-wrapper input {
+    height: 40px;
+    padding: 5px 10px;
+    border: 1px solid #d5d5d5;
+    background-color: transparent;
+    transition: all 0.4s linear;
+    width: 100%;
+    border-radius: 5px; }
+    .form-fields-wrapper input:focus {
+      background-color: white;
+      border-color: transparent; }
+  .form-fields-wrapper button[type='submit'] {
+    width: 100%;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.4s linear;
+    background: linear-gradient(90deg, #24c6dc, #514a9d);
+    font-family: 'Varela Round';
+    color: white; }
+    .form-fields-wrapper button[type='submit']:hover {
+      background: linear-gradient(90deg, #139bad, #453d9c); }
+    .form-fields-wrapper button[type='submit']:active {
+      background: linear-gradient(90deg, #045661, #170c91); }
 
 body {
   padding: 0;
