@@ -1,7 +1,7 @@
 import { render } from 'inferno'
 import App from './App'
-import LoginPage from './LoginPage'
-import SingUpPage from './SingUpPage'
+import LoginPage from './Components/Authentication/LoginPage'
+import SingUpPage from './Components/Authentication/SingUpPage'
 import { Router, Route, IndexRoute } from 'inferno-router'
 import { createBrowserHistory } from 'history'
 

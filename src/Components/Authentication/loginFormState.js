@@ -1,7 +1,7 @@
 import MobxReactForm from 'mobx-react-form'
 import validatorjs from 'validatorjs'
-import authStore from './stores/authStore'
-import broadcaster from './broadcaster/broadcaster'
+import authStore from '../../stores/authStore'
+import broadcaster from '../../broadcaster/broadcaster'
 
 const plugins = { dvr: validatorjs }
 

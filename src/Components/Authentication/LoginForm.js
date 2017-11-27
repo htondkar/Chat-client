@@ -1,9 +1,9 @@
 import Component from 'inferno-component'
 import form from './loginFormState'
-import InputField from './common/InputField'
+import InputField from '../common/InputField'
 import { observer } from 'inferno-mobx'
-import broadcaster from './broadcaster/broadcaster'
-import { browserHistory } from './index'
+import broadcaster from '../../broadcaster/broadcaster'
+import { browserHistory } from '../../index'
 
 const LoginForm = observer(
   class LoginForm extends Component {
@@ -16,7 +16,7 @@ const LoginForm = observer(
 
     render() {
       return (
-        <form onSubmit={form.onSubmit} className="login-form-fields-wrapper">
+        <form onSubmit={form.onSubmit} class="login-form-fields-wrapper">
           <InputField
             type="text"
             {...form.$('email').bind()}
@@ -27,7 +27,7 @@ const LoginForm = observer(
             error={form.$('password').errors()}
             type="password"
           />
-          <div className="form-error">{form.errors()}</div>
+          <div class="form-error">{form.errors()}</div>
           <button type="submit">Login</button>
         </form>
       )

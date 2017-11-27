@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { appendToFormData } from '../helpers/helpers'
 import endPoints from './endPoints'
+// import { appendToFormData } from '../helpers/helpers'
 
 class API {
   constructor() {
