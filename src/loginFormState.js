@@ -1,5 +1,7 @@
 import MobxReactForm from 'mobx-react-form'
 import validatorjs from 'validatorjs'
+import authStore from './stores/authStore'
+import broadcaster from './broadcaster/broadcaster'
 
 const plugins = { dvr: validatorjs }
 
@@ -20,17 +22,30 @@ const fields = [
 
 const hooks = {
   onSuccess(form) {
-    alert('Form is valid! Send the request here.')
-    // get field values
-    console.log('Form Values!', form.values())
+    const values = form.values()
+    authStore.authenticate(values)
   },
-  onError(form) {
-    alert('Form has errors!')
-    // get all form errors
-    console.log('All form errors', form.errors())
-  }
+  onError(form) {}
 }
 
 const form = new MobxReactForm({ fields }, { plugins, hooks })
+
+const setErrorMessages = ({ payload }) => {
+  const fields = {}
+
+  form.each(field => {
+    fields[field.name] = field
+  })
+
+  payload.forEach(error => {
+    const field = fields[error.param]
+    if (field) {
+      field.invalidate(error.msg)
+      field.showErrors()
+    }
+  })
+}
+
+broadcaster.subscribe({ fn: setErrorMessages, eventType: 'SIGN_IN_ERROR' })
 
 export default form

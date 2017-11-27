@@ -1,8 +1,38 @@
 import Component from 'inferno-component'
 import form from './loginFormState'
+import InputField from './common/InputField'
+import { observer } from 'inferno-mobx'
+import broadcaster from './broadcaster/broadcaster'
+import { browserHistory } from './index'
 
-export default class LoginForm extends Component {
-  render() {
-    return <div className="login-form">this is the login form</div>
+const LoginForm = observer(
+  class LoginForm extends Component {
+    componentDidMount() {
+      broadcaster.subscribe({
+        eventType: 'USER_DID_LOGIN',
+        fn: () => browserHistory.push('/chat')
+      })
+    }
+
+    render() {
+      return (
+        <form onSubmit={form.onSubmit} className="login-form-fields-wrapper">
+          <InputField
+            type="text"
+            {...form.$('email').bind()}
+            error={form.$('email').errors()}
+          />
+          <InputField
+            {...form.$('password').bind()}
+            error={form.$('password').errors()}
+            type="password"
+          />
+          <div className="form-error">{form.errors()}</div>
+          <button type="submit">Login</button>
+        </form>
+      )
+    }
   }
-}
+)
+
+export default LoginForm

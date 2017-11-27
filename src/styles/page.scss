@@ -4,9 +4,12 @@
   padding: 20px;
   min-height: 100vh;
   width: 100%;
+  background: linear-gradient(90deg, #c21500, #ffc500);
+
   &.center-content {
     @include center;
   }
+
   &.center-content-vertical {
     @include center-vertical;
   }

@@ -1,4 +1,3 @@
-import { version } from 'inferno'
 import Component from 'inferno-component'
 
 class App extends Component {

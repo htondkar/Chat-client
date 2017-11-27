@@ -7,13 +7,13 @@ import { createBrowserHistory } from 'history'
 
 import './styles/base.css'
 
-const browserHistory = createBrowserHistory()
+export const browserHistory = createBrowserHistory()
 
 const routes = (
   <Router history={browserHistory}>
     <Route component={App}>
       <IndexRoute component={LoginPage} />
-      <Route path='sign-up' component={SingUpPage} />
+      <Route path="sign-up" component={SingUpPage} />
     </Route>
   </Router>
 )
