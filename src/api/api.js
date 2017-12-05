@@ -31,6 +31,14 @@ class API {
   signUp = values => {
     return axios.post(endPoints.signUp, values, this.config())
   }
+
+  loadUserChats = (token) => {
+    return axios.get(endPoints.fetchUserChats, this.config(token))
+  }
+
+  loadAllUsers = token => {
+    return axios.get(endPoints.fetchAllUsers, this.config(token))
+  }
 }
 
 const api = new API()

@@ -2,7 +2,9 @@ const baseURL = 'http://localhost:3333'
 
 const urls = {
   signIn: 'sign-in',
-  signUp: 'sign-up'
+  signUp: 'sign-up',
+  fetchAllUsers: 'users/list',
+  fetchUserChats: 'chats/list'
 }
 
 const urlProxy = new Proxy(urls, {

@@ -2,22 +2,33 @@ import { observable, action } from 'mobx'
 import api from '../api/api'
 import broadcaster from '../broadcaster/broadcaster'
 import { runIfResIsOk } from '../helpers/helpers'
+import * as storage from './localStorage'
 
 class authStore {
   authState = observable({
     authenticated: false,
-    token: null
+    token: null,
+    name: null,
+    userId: null
   })
 
   setToken(token) {
     this.authState.authenticated = true
     this.authState.token = token
+  }
+
+  logUserIn(token, userInfo) {
+    this.setToken(token)
+    this.setUserInfo(userInfo)
     this.userDidLogin()
   }
 
   authenticate = action(values => {
-    const onSuccessfulLogin = ({ data: { token } }) => {
-      if (token) this.setToken(token)
+    const onSuccessfulLogin = ({ data: { token, user } }) => {
+      if (token) {
+        this.logUserIn(token, user)
+        storage.write(storage.storageKey, { token, user })
+      }
     }
 
     const onLoginFail = ({ data }) => {
@@ -32,11 +43,17 @@ class authStore {
       .catch(console.log)
   })
 
-  userDidLogin = () => {
+  setUserInfo(data) {
+    console.log(data)
+    this.authState.name = data.name
+    this.authState.userId = data.id
+  }
+
+  userDidLogin() {
     broadcaster.broadcast({ type: 'USER_DID_LOGIN' })
   }
 
-  signUp = values => {
+  signUp(values) {
     const onSuccessfulLogin = ({ data }) => {
       broadcaster.broadcast({ type: 'USER_DID_SIGN_UP' })
     }
@@ -51,6 +68,14 @@ class authStore {
       .signUp(values)
       .then(resHandler)
       .catch(console.log)
+  }
+
+  checkPrevAuth() {
+    if (storage.has(storage.storageKey)) {
+      const authData = storage.read(storage.storageKey)
+      console.log(authData)
+      this.logUserIn(authData.token, authData.user)
+    }
   }
 }
 
