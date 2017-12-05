@@ -7,6 +7,7 @@ import LoginPage from './Components/Authentication/LoginPage'
 import SingUpPage from './Components/Authentication/SingUpPage'
 import ChatContainer from './Components/Chat/ChatContainer'
 import authStore from './stores/authStore'
+import './webSocket'
 
 import './styles/base.css'
 

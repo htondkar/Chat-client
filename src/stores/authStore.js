@@ -44,7 +44,6 @@ class authStore {
   })
 
   setUserInfo(data) {
-    console.log(data)
     this.authState.name = data.name
     this.authState.userId = data.id
   }
@@ -73,7 +72,6 @@ class authStore {
   checkPrevAuth() {
     if (storage.has(storage.storageKey)) {
       const authData = storage.read(storage.storageKey)
-      console.log(authData)
       this.logUserIn(authData.token, authData.user)
     }
   }

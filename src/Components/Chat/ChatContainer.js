@@ -1,14 +1,17 @@
 import Component from 'inferno-component'
+
 import authStore from '../../stores/authStore'
 import { observer } from 'inferno-mobx'
 import { browserHistory } from '../../index'
 import api from '../../api/api'
-import { emitNewChat } from '../../socket'
+import socketActions from '../../webSocket'
+
+import PreviousChatSessions from './PreviousChatSessions'
+import OnlineUsers from './OnlineUsers'
+import ActiveChatSession from './ActiveChatSession'
 
 const ChatContainer = observer(
   class ChatContainer extends Component {
-    state = { timeStamp: '' }
-
     componentWillMount = () => {
       this.redirectIfNotAuthenticated()
     }
@@ -48,8 +51,9 @@ const ChatContainer = observer(
     render() {
       return (
         <div className="chat-container">
-          this is the ChatContainer
-          <div>{this.state.timeStamp}</div>
+          <PreviousChatSessions />
+          <ActiveChatSession />
+          <OnlineUsers />
         </div>
       )
     }
