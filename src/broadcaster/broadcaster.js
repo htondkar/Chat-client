@@ -7,12 +7,11 @@ class Broadcaster {
   }
 
   filterWithEventType = event => subscriber =>
-    subscriber.eventType ? event.type === subscriber.eventType : true
+    subscriber.eventType ? event.eventType === subscriber.eventType : true
 
   broadcast(event) {
-    this.subscribers
-      .filter(this.filterWithEventType(event))
-      .forEach(subscriber => subscriber.fn(event))
+    const callAbles = this.subscribers.filter(this.filterWithEventType(event))
+    callAbles.forEach(subscriber => subscriber.fn(event))
   }
 
   subscribe(newSubscriber) {
@@ -36,4 +35,3 @@ class Broadcaster {
 }
 
 export default new Broadcaster()
-

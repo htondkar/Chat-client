@@ -1,4 +1,4 @@
-import { observable, action } from 'mobx'
+import { observable, action, autorun } from 'mobx'
 import api from '../api/api'
 import broadcaster from '../broadcaster/broadcaster'
 import { runIfResIsOk } from '../helpers/helpers'
@@ -32,7 +32,7 @@ class authStore {
     }
 
     const onLoginFail = ({ data }) => {
-      broadcaster.broadcast({ type: 'SIGN_IN_ERROR', payload: data })
+      broadcaster.broadcast({ eventType: 'SIGN_IN_ERROR', payload: data })
     }
 
     const resHandler = runIfResIsOk(onSuccessfulLogin, onLoginFail)
@@ -49,16 +49,16 @@ class authStore {
   }
 
   userDidLogin() {
-    broadcaster.broadcast({ type: 'USER_DID_LOGIN' })
+    broadcaster.broadcast({ eventType: 'USER_DID_LOGIN' })
   }
 
   signUp(values) {
     const onSuccessfulLogin = ({ data }) => {
-      broadcaster.broadcast({ type: 'USER_DID_SIGN_UP' })
+      broadcaster.broadcast({ eventType: 'USER_DID_SIGN_UP' })
     }
 
     const onLoginFail = ({ data }) => {
-      broadcaster.broadcast({ type: 'SIGN_UP_ERROR', payload: data })
+      broadcaster.broadcast({ eventType: 'SIGN_UP_ERROR', payload: data })
     }
 
     const resHandler = runIfResIsOk(onSuccessfulLogin, onLoginFail)
@@ -75,6 +75,16 @@ class authStore {
       this.logUserIn(authData.token, authData.user)
     }
   }
+
+  register = autorun(() => {
+    if (this.authState.authenticated) {
+      import('../webSocket.js').then(({ default: webSocket }) => {
+        webSocket.listenForReceivedMessages(data => {
+          broadcaster.broadcast({ eventType: 'RECEIVED_MESSAGE', data })
+        })
+      })
+    }
+  })
 }
 
 const store = new authStore()

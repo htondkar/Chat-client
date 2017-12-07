@@ -1,63 +1,71 @@
 import Component from 'inferno-component'
+import { connect } from 'inferno-mobx'
 
-import authStore from '../../stores/authStore'
-import { observer } from 'inferno-mobx'
 import { browserHistory } from '../../index'
 import api from '../../api/api'
-import socketActions from '../../webSocket'
-
-import PreviousChatSessions from './PreviousChatSessions'
-import OnlineUsers from './OnlineUsers'
+import chatsStore from '../../stores/chatsStore'
+import broadcaster from '../../broadcaster/broadcaster'
+import OtherUsers from './OtherUsers'
 import ActiveChatSession from './ActiveChatSession'
 
-const ChatContainer = observer(
-  class ChatContainer extends Component {
-    componentWillMount = () => {
-      this.redirectIfNotAuthenticated()
+@connect(['authStore'])
+class ChatContainer extends Component {
+  componentWillMount = () => {
+    this.redirectIfNotAuthenticated()
+
+    broadcaster.subscribe({
+      eventType: 'RECEIVED_MESSAGE',
+      fn: this.handleIncomingMessage
+    })
+  }
+
+  redirectIfNotAuthenticated() {
+    if (!this.props.authStore.authState.authenticated) {
+      browserHistory.push('/')
     }
+  }
 
-    redirectIfNotAuthenticated() {
-      if (!authStore.authState.authenticated) {
-        browserHistory.push('/')
-      }
+  componentDidMount = async () => {
+    if (!!this.props.authStore.authState.authenticated) {
+      this.fetchAllUsers()
     }
+  }
 
-    componentDidMount = async () => {
-      if (!!authStore.authState.authenticated) {
-        this.fetchUserChats()
-        this.fetchAllUsers()
-      }
-    }
+  handleIncomingMessage = data => {
+    // fire a method in chatsStore to add the message to the chat
+    console.log(data)
+  }
 
-    async fetchAllUsers() {
-      const { data: { data }, status } = await api.loadAllUsers(
-        authStore.authState.token
-      )
-      const users = this.validateResponse(status, data)
-      console.log(users)
-    }
+  async fetchAllUsers() {
+    const { data: { data }, status } = await api.loadAllUsers(
+      this.props.authStore.authState.token
+    )
+    const response = this.validateResponse(status, data)
+    response && chatsStore.setUsers(response.users)
+  }
 
-    async fetchUserChats() {
-      const { data: { data: { chats }, status } } = await api.loadUserChats(
-        authStore.authState.token
-      )
+  validateResponse = (status, data) => (status < 400 ? data : null)
 
-      const verfiedChats = this.validateResponse(status, chats)
-      console.log(verfiedChats)
-    }
-
-    validateResponse = (status, data) => (status < 400 ? data : null)
-
-    render() {
-      return (
-        <div className="chat-container">
-          <PreviousChatSessions />
-          <ActiveChatSession />
-          <OnlineUsers />
-        </div>
+  userSelectionHandlerFactory = user => () => {
+    if (chatsStore.doesChatExist(user._id)) {
+      chatsStore.setActiveChatByUser(user._id)
+    } else {
+      import('../../webSocket').then(({ default: socketActions }) =>
+        socketActions.emitNewChat({ with: user._id }).then(chatInfo => {
+          chatsStore.addNewChat(chatInfo)
+        })
       )
     }
   }
-)
+
+  render() {
+    return (
+      <div className="chat-container page">
+        <OtherUsers clickHandlerFactory={this.userSelectionHandlerFactory} />
+        <ActiveChatSession />
+      </div>
+    )
+  }
+}
 
 export default ChatContainer

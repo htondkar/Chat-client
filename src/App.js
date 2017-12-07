@@ -1,5 +1,13 @@
 import Component from 'inferno-component'
 import { NotificationContainer } from 'react-notifications'
+import broadcaster from './broadcaster/broadcaster'
+
+broadcaster.subscribe({
+  eventType: 'USER_DID_LOGIN',
+  fn: () => {
+    import('./webSocket')
+  }
+})
 
 class App extends Component {
   render() {

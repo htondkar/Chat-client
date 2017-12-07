@@ -1,0 +1,84 @@
+@import './mixins.scss';
+
+.chat-component {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.chat-container {
+  @include center;
+
+  justify-content: center;
+  min-height: 100vh;
+  width: 100vw;
+
+  & > * {
+    margin: 0 20px;
+  }
+
+  .other-users {
+    flex-basis: 20%;
+  }
+
+  .chat-board {
+    flex-basis: 70%;
+  }
+}
+
+.other-users {
+  @extend .chat-component;
+
+  .user-row {
+    @include center;
+
+    height: 50px;
+    min-width: 200px;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 20px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.85);
+    }
+  }
+}
+
+.chat-board {
+  @extend .chat-component;
+  @include center-vertical;
+
+  & > * {
+    width: 100%;
+  }
+
+  padding: 20px;
+  height: 70vh;
+  width: 600px;
+
+  .chat-info {
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  .conversation {
+    flex: 1;
+  }
+
+  .chat-text-input {
+    width: 100%;
+
+    input[type='text'] {
+      width: 100%;
+      border-radius: 10px;
+      height: 50px;
+      padding: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      line-height: 20px;
+      font-size: 18px;
+      color: #555555;
+    }
+  }
+}
