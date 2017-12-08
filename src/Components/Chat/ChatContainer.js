@@ -31,9 +31,8 @@ class ChatContainer extends Component {
     }
   }
 
-  handleIncomingMessage = data => {
-    // fire a method in chatsStore to add the message to the chat
-    console.log(data)
+  handleIncomingMessage = ({ data }) => {
+    chatsStore.newMessage(data)
   }
 
   async fetchAllUsers() {

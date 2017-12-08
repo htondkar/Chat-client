@@ -5,11 +5,15 @@ const ChatInfo = observer(({ withUser }) => (
   <div className="chat-info">{withUser.name}</div>
 ))
 
-const Message = ({ message }) => <div className="message">{message}</div>
+const Message = ({ message: { message, type } }) => (
+  <div className={`message ${type === 'received' ? 'received' : 'sent'}`}>
+    <div className="message-text">{message}</div>
+  </div>
+)
 
-const Conversation = observer(({ conversation }) => (
+const Conversation = observer(({ messages }) => (
   <div className="conversation">
-    {conversation.map(message => <Message message={message} />)}
+    {messages.map(message => <Message message={message} />)}
   </div>
 ))
 
@@ -43,13 +47,13 @@ export default class ChatBoard extends Component {
       onMessage,
       findConversationWith,
       findUserById,
-      activeChatInfo: { receiver }
+      activeChatInfo: { receiver, messages }
     }
   }) {
     return (
       <div className="chat-board">
         <ChatInfo withUser={findUserById(receiver)} />
-        <Conversation conversation={findConversationWith(receiver._id)} />
+        <Conversation messages={messages} />
         <TextField onMessage={onMessage} />
       </div>
     )

@@ -37,6 +37,14 @@ class chatsStore {
   }
 
   @action
+  newMessage({ senderId, message }) {
+    const chat = this.chats.find(chat => chat.receiver === senderId)
+    if (chat) {
+      chat.messages.push({ message, type: 'received' })
+    }
+  }
+
+  @action
   setActiveChat = chatId => {
     this.activeChat = chatId
   }
@@ -58,9 +66,18 @@ class chatsStore {
 
   @action
   onMessage = message => {
+    this.wroteNewMessageByChatId(message)
     import('../webSocket').then(({ default: webSocket }) => {
       webSocket.sendMessage({ to: this.activeChatInfo.receiver, message })
     })
+  }
+
+  findChatById = chatId => this.chats.find(chat => chat._id === chatId) || null
+
+  @action
+  wroteNewMessageByChatId(message) {
+    const chat = this.findChatById(this.activeChat)
+    chat.messages.push({ message, type: 'sent' })
   }
 }
 

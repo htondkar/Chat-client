@@ -210,7 +210,7 @@ input {
     .form-fields-wrapper button[type='submit']:active {
       background: linear-gradient(90deg, #045661, #170c91); }
 
-.chat-component, .other-users, .chat-board {
+.chat-component, .other-users, .chat-board, .chat-board .conversation .message .message-text {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.35); }
@@ -220,11 +220,12 @@ input {
   justify-content: center;
   align-content: center;
   align-items: center;
+  flex-wrap: wrap-reverse;
   justify-content: center;
   min-height: 100vh;
   width: 100vw; }
   .chat-container > * {
-    margin: 0 20px; }
+    margin: 20px; }
   .chat-container .other-users {
     flex-basis: 20%; }
   .chat-container .chat-board {
@@ -258,8 +259,6 @@ input {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); }
-  .chat-board .conversation {
-    flex: 1; }
   .chat-board .chat-text-input {
     width: 100%; }
     .chat-board .chat-text-input input[type='text'] {
@@ -272,6 +271,23 @@ input {
       line-height: 20px;
       font-size: 18px;
       color: #555555; }
+  .chat-board .conversation {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow-y: auto;
+    padding: 5px; }
+    .chat-board .conversation > * {
+      margin: 5px 0; }
+    .chat-board .conversation .message {
+      display: flex;
+      width: 100%; }
+      .chat-board .conversation .message.received {
+        justify-content: flex-end; }
+      .chat-board .conversation .message.sent {
+        justify-content: flex-start; }
+      .chat-board .conversation .message .message-text {
+        padding: 10px; }
 
 body {
   padding: 0;
